@@ -1,5 +1,5 @@
 id,precio,stock,descripcion,stockAlmacen
-60,2.0,1,champú,5
-1,2.0,10,Gel,5
-2,5.0,10,maquinilla,5
-3,3.0,10,Dental,5
+60,2.0,champú,1,5
+1,2.0,Gel,10,5
+2,5.0,maquinilla,10,5
+3,3.0,Dental,10,5

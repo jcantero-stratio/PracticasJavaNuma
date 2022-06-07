@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 
 import ExpresionesLambda.ExpresionesLambda;
@@ -13,6 +15,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -35,15 +40,16 @@ public class ReponedorSimple implements Reponedor {
 	// iniciamos el stock inicial.
 	public static void StockInicial() throws Exception { // listo
 		if (producStock.isEmpty()) {
-			Producto ob1 = new Producto(60, 2, "champú", 1, 5);
-			Producto ob2 = new Producto(1, 2, "Gel", 10, 5);
-			Producto ob3 = new Producto(2, 5, "maquinilla", 10, 5);
-			Producto ob4 = new Producto(3, 3, "Dental", 10, 5);
-			producStock.add(ob1);
-			producStock.add(ob2);
-			producStock.add(ob3);
-			producStock.add(ob4);
-			crearStock(producStock);
+//			Producto ob1 = new Producto(60, 2, "champú", 1, 5);
+//			Producto ob2 = new Producto(1, 2, "Gel", 10, 5);
+//			Producto ob3 = new Producto(2, 5, "maquinilla", 10, 5);
+//			Producto ob4 = new Producto(3, 3, "Dental", 10, 5);
+//			producStock.add(ob1);
+//			producStock.add(ob2);
+//			producStock.add(ob3);
+//			producStock.add(ob4);
+//			crearStock(producStock);
+			leerArchivosCvs();
 
 			System.err.println("Tienda abierta!");
 		} else {
@@ -112,6 +118,69 @@ public class ReponedorSimple implements Reponedor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+	}
+	// leer archivo cvs.
+	public static void leerArchivosCvs() {
+	try {
+//	List <Producto> productosCvs = new ArrayList<Producto>();
+	CsvReader leerProducto = new CsvReader("/home/jcantero/Desktop/Documentos/HolaMundo/src/almacen.csv");
+	leerProducto.readHeaders();
+	
+//		String pruebaCvsRoman = "/home/jcantero/Desktop/Documentos/HolaMundo/src/almacen.csv";
+//		
+//		Path path = Paths.get(pruebaCvsRoman);
+//		
+//		try (Stream <String>pruebaCsv = Files.lines(path)){
+//			List <Producto> productosCsv = pruebaCsv.skip(1)
+//					.map(s->s.split(","))
+//					.map(split -> new Producto(
+//						Integer.parseInt(split[0]),
+//						Double.parseDouble(split[1]),
+//						split[2],
+//						Integer.parseInt(split[3]),
+//						Integer.parseInt(split[4])) {						
+//					}).collect(Collectors.toList());
+//		
+//		productosCsv.forEach(System.out::println);
+//		
+//		}catch (Exception ex) {			
+//		}
+	
+		while(leerProducto.readRecord()) {
+		String  id = leerProducto.get(0);
+		String preciox = leerProducto.get(1);
+		String descripcionx = leerProducto.get(2);
+		String stockx = leerProducto.get(3);
+		String stockAlmacenx = leerProducto.get(4);
+		
+//		System.out.println(id);
+//		System.out.println(preciox);
+//		System.out.println(descripcionx);
+//		System.out.println(stockx);
+//		System.out.println(stockAlmacenx);
+		
+		producStock.add(new Producto(Integer.parseInt(id), Double.parseDouble(preciox), descripcionx, Integer.parseInt(stockx), Integer.parseInt(stockAlmacenx)));			
+		producStock.forEach(System.out::println);
+//		int idParse = Integer.valueOf(leerProducto.get(0));
+//		double precioParse = Integer.valueOf(leerProducto.get(1));
+////		String descripcionx = leerProducto.get(2);
+//		int stockParse = Integer.valueOf(leerProducto.get(3));
+//		int stockAlmacenParse = Integer.valueOf(leerProducto.get(4));
+		
+////		
+//		System.err.println(idParse);
+//		System.err.println(precioParse);
+//		System.err.println(stockParse);
+//		System.err.println(stockAlmacenParse);
+//	
+//	Producto obCVS = new Producto(Integer.valueOf(id), Integer.valueOf(preciox), descripcionx, Integer.valueOf(stockx), Integer.valueOf(stockAlmacenx));
+//	System.out.println(obCVS);
+	}
+	leerProducto.close();
+	} catch(Exception ex) {
+		System.out.println("no va");
+	}
 
 	}
 
